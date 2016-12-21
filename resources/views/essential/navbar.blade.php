@@ -15,32 +15,40 @@
 
 		<!-- User account -->
 		<div class="pull-right user-login">
-			<a class="btn btn-sm btn-primary" href="/login">Login</a> 
-			{{-- or &nbsp;<a class="user-register" href="/">Register</a> --}}
+			@if (Route::has('login'))
+				<div class="top-right links">
+					@if (Auth::check())
+						<a class="btn btn-sm btn-primary" href="{{ url('/admin') }}">Dashboard</a>
+					@else
+						{{--<a class="btn btn-sm btn-primary" href="{{ url('/login') }}">Login</a> --}}
+						{{-- or &nbsp;<a class="user-register" href="{{ url('/register') }}">Register</a> --}}
+					@endif
+				</div>
+			@endif
 		</div>
 		<!-- END User account -->
 
 		<!-- Navigation menu -->
 		<ul class="nav-menu">
 			<li>
-				<a {{{ (Request::is('/') ? 'class=active' : null) }}} href="/">Home</a>
+				<a {{ (Request::is('/') ? 'class=active' : null) }} href="/">Home</a>
 			</li>
 			<li>
-				<a {{{ (Request::is('byalpha') ? 'class=active' : null) }}}  href="byalpha">University</a>
+				<a {{ (Request::is('byalpha') ? 'class=active' : null) }}  href="byalpha">University</a>
 				<ul>
-					<li><a {{{ (Request::is('byalpha') ? 'class=active' : null) }}}  href="byalpha">By Alphabets</a></li>
-					<li><a {{{ (Request::is('byarea') ? 'class=active' : null) }}}  href="byarea">By Area</a></li>
-					<li><a {{{ (Request::is('bycategory') ? 'class=active' : null) }}}  href="bycategory">By Category</a></li>
+					<li><a {{ (Request::is('byalpha') ? 'class=active' : null) }}  href="byalpha">By Alphabets</a></li>
+					<li><a {{ (Request::is('byarea') ? 'class=active' : null) }}  href="byarea">By Area</a></li>
+					<li><a {{ (Request::is('bycategory') ? 'class=active' : null) }}  href="bycategory">By Category</a></li>
 				</ul>
 			</li>
 			<li>
-					<li><a {{{ (Request::is('about') ? 'class=active' : null) }}} href="about">About Us</a></li>
+					<li><a {{ (Request::is('about') ? 'class=active' : null) }} href="about">About Us</a></li>
 			</li>
 			<li>
-					<li><a {{{ (Request::is('contact') ? 'class=active' : null) }}} href="contact">Contact Us</a></li>
+					<li><a {{ (Request::is('contact') ? 'class=active' : null) }} href="contact">Contact Us</a></li>
 			</li>
 			<li>
-					<li><a {{{ (Request::is('follow') ? 'class=active' : null) }}}  href="http://www.google.com" target="_blank">Follow</a></li>
+					<li><a {{ (Request::is('follow') ? 'class=active' : null) }}  href="http://www.google.com" target="_blank">Follow</a></li>
 			</li>
 			
 		</ul>
