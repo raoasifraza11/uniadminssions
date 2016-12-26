@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
+use App\Post;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
+
+
     /**
      * Home page redirection
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
