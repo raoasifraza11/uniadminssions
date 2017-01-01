@@ -56,7 +56,9 @@ class PagesController extends Controller
     public function byAlpha(){
         $data = [
             'title' => 'Alphabets',
-            'institutes' => Institute::all()->sortBy('title')
+            //'institutes' => Institute::all()->sortBy('title')
+            'institutes' => Institute::orderBy('name', 'asc')->paginate(5)
+
         ];
         //var_dump($data['institutes']);
         return view('pages.byDefault', compact('data'));
@@ -69,7 +71,7 @@ class PagesController extends Controller
     public function byArea(){
         $data = [
             'title' => 'Area',
-            'institutes' => Institute::all()->sortBy('address_id')
+            'institutes' => Institute::orderBy('city_id', 'asc')->paginate(5)
 
         ];
 
@@ -83,22 +85,23 @@ class PagesController extends Controller
     public function byCategory(){
         $data = [
             'title' => 'Category',
-            'institutes' => Institute::all()->sortBy('category_id')
+            'institutes' => Institute::orderBy('category_id', 'asc')->paginate(5)
 
         ];
 
         return view('pages.byDefault', compact('data'));
     }
 
-    public function testuni(){
-        $institutes = Institute::all()->where('status', '=', true);
-        return view('test', compact('institutes'));
-    }
 
+    /**
+     * Debug the view output
+     * @return mixed
+     */
     public function debug(){
 
         $data = Category::find(1);
 
         return $data['name'];
     }
+
 }

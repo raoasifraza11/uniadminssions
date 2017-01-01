@@ -55,12 +55,12 @@
 
 						<div id="custom-search-input">
 							<div class="input-group col-md-12">
-								<input type="text" class="form-control" placeholder="Institute/Category Name" />
-                                    <span class="input-group-btn">
-										<button class="btn btn-info btn-lg" type="button">
-											<i class="fa fa-search custom-search-btn"></i>
-										</button>
-									</span>
+								<input type="text" class="form-control" placeholder="City/Category Name" />
+								<span class="input-group-btn">
+									<button class="btn btn-info btn-lg" type="button">
+										<i class="fa fa-search custom-search-btn"></i>
+									</button>
+								</span>
 							</div>
 						</div>
 
@@ -72,13 +72,13 @@
 							<div class="filter-option-content">
 								<div class="restaurant-status-section">
 									<div class="restaurant-status-title gray-deep-bg">
-									<em style="color: green;">Status<em>
+										<em style="color: green;">Status</em>
 									</div>
 									<div class="restaurant-status-filter">
 										<ul class="list-unstyled">
 											<li>
 
-												<input type="checkbox" id="restaurantOpen">
+												<input type="checkbox" id="admissionOpen" checked>
 												<label for="restaurantOpen"><i class="icon-check custom-check"></i> Admission Now Open</label>
 											</li>
 										</ul>
@@ -87,16 +87,15 @@
 								</div>
 								<div class="restaurant-service-section">
 									<div class="restaurant-service-title gray-deep-bg">
-									<em style="color: green;">Category<em>
+										<em style="color: green;">Category</em>
 									</div>
 									<div class="restaurant-service-filter">
 										<ul class="list-unstyled">
-                                            <?php $categories = Category::all()->sortBy('name'); ?>
-											@foreach($categories as $category)
-												<li>
-													<input type="checkbox" value="{{ $category->id }}" name="{{ $category->name }}" id="{{ $category->id }}" checked>
-													<label for="{{ $category->name }}"><i class="icon-check custom-check" ></i> {{ str_replace('Engineering', '', $category->name ) }}</label>
-												</li>
+											@foreach(\App\Category::all()->sortBy('name') as $category)
+											<li>
+												<input type="checkbox" name="category" id="{{ $category->name }}" value="{{ $category->id }}" checked>
+												<label for="{{ $category->name }}"><i class="icon-check custom-check" ></i>{{ str_replace("Engineering", '',$category->name) }}</label>
+											</li>
 											@endforeach
 										</ul>
 									</div>
@@ -105,25 +104,20 @@
 
 								<div class="restaurant-cuisines-section">
 									<div class="restaurant-cuisines-title gray-deep-bg">
-										<em style="color: green;">Area<em>
+										<em style="color: green;">Area</em>
 									</div>
 									<div class="restaurant-cuisines-filter">
 										<ul class="list-unstyled">
 											<li>
-												<input type="checkbox" value="" name="allcuisines" id="allCuisines" checked>
-												<label for="allCuisines"><i class="icon-check custom-check"></i> View All</label>
+												<input type="checkbox" value="" name="city" id="allCity" checked>
+												<label for="allCity"><i class="icon-check custom-check"></i> View All</label>
 											</li>
-                                            <?php $categories = Category::all()->sortBy('name'); ?>
-											@foreach($categories as $category)
-												<li>
-													<input type="checkbox" value="" name="allcuisines" id="SigleCuisine" checked>
-													<label for="SigleCuisine"><i class="icon-check custom-check" ></i> {{ str_replace('Engineering', '', $category->name ) }}</label>
-												</li>
+											@foreach(\App\City::all()->sortBy('name') as $city)
+											<li>
+												<input type="checkbox" value="{{ $city->id }}" name="city" id="{{ $city->name }}" checked>
+												<label for="{{ $city->name }}"><i class="icon-check custom-check" ></i> {{ $city->name }}</label>
+											</li>
 											@endforeach
-												<li>
-													<input type="checkbox" value="" name="allcuisines" id="SigleCuisine">
-													<label for="SigleCuisine"><i class="icon-check custom-check" ></i> ABC</label>
-												</li>
 										</ul>
 									</div>
 
@@ -134,6 +128,8 @@
 					</div>
 
 				</aside>
+
+
 			</div>
 
 			<div class="col-md-9 restaurant-list-default">
@@ -174,6 +170,11 @@
 					<!-- END Restaurant detail -->
 
 					@endforeach
+					<div class="row">
+						<div class="col-md-6 float-right">
+							{{ $data['institutes']->links() }}
+						</div>
+					</div>
 				</div>
 				<!-- End Single Restaurant detail -->
 

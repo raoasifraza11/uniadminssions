@@ -110,7 +110,14 @@
                                 </form>
                             </div>
                         </div>
+                        @if(Session::has('message'))
+                        <div class="alert alert-success top-margin" id="success-alert">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('.alert').hide()">&times;</a>
+                            <strong>Successfuly!</strong> {{ Session::get('message') }}.
+                        </div>
+                        @endif
                     </div>
+
                     <div class="col-md-4">
                         <div class="Contact-Info">
                             <h4>Contact Details</h4>

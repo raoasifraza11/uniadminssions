@@ -6,12 +6,21 @@
 @extends('layouts.master')
 
 @section('title') Home | Uni-admission @stop
+@section('jstop')
+	<script>
+
+	</script>
+@stop
 @section('content')
 <!-- static header -->
-
+@if(Session::has('message'))
+<div class="alert alert-success alert-dismissable fade in" id="success-alert">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('.alert').hide()">&times;</a>
+	<strong>Success!</strong> {{ Session::get('message') }}.
+</div>
+@endif
 <section class="static-section">
 	<div class="container">
-
 		<div class="row static-header-content-wrapper">
 			<div class="static-header-content">
 				<div class="static-header-text">
@@ -38,7 +47,7 @@
 				</div>
 
 				<div class="guest-info text-center">
-					<p><i class="fa fa-university" aria-hidden="true"></i> Open Admission in <span>2,200</span> Universities </p>
+					<p><i class="fa fa-university" aria-hidden="true"></i> Open Admission in <span>{{ \App\Institute::all()->where('status', true)->count() }}</span> Universities </p>
 				</div>
 
 			</div>
@@ -288,6 +297,4 @@
 	</div>
 </section>
 <div class="clearfix"></div>
-	<-- Download the app end -->
-
 @endsection
