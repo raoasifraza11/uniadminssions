@@ -88,29 +88,36 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="Contact-Form">
-                                <form class="leave-comment contact-form" method="" action="#" id="cform" autocomplete="on">
+                                <form class="leave-comment contact-form" method="post" action="{{ route('sendmail') }}" id="cform" autocomplete="on">
                                     <div class="Contact-us">
                                         <div class="form-input col-md-4">
-                                            <input type="text" class="form-control" placeholder="Name">
+                                            <input type="text" name="title" class="form-control" placeholder="Name" required>
                                         </div>
                                         <div class="form-input col-md-4">
-                                            <input type="email" class="form-control" placeholder="Email">
+                                            <input type="email" name="mail" class="form-control" placeholder="Email" required>
                                         </div>
                                         <div class="form-input col-md-4">
-                                            <input type="text" class="form-control" name="contact_phone" placeholder="Phone">
+                                            <input type="tel" name="phone" pattern='([0-9]{11})'  class="form-control" placeholder="Phone: 03001234567" required>
                                         </div>
                                         <div class="form-input col-md-12">
-                                            <textarea class="form-control" rows="5" placeholder="Message"></textarea>
+                                            <textarea type="text" class="form-control" name="bodyMessage" rows="5" placeholder="Message" required></textarea>
                                         </div>
                                         <div class="form-submit col-md-12">
                                             <button class="btn btn-color" type="submit">Send Message</button>
-
                                         </div>
+                                        {{ csrf_field() }}
                                     </div>
                                 </form>
                             </div>
                         </div>
+                        @if(Session::has('message'))
+                        <div class="alert alert-success top-margin" id="success-alert">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('.alert').hide()">&times;</a>
+                            <strong>Successfuly!</strong> {{ Session::get('message') }}.
+                        </div>
+                        @endif
                     </div>
+
                     <div class="col-md-4">
                         <div class="Contact-Info">
                             <h4>Contact Details</h4>

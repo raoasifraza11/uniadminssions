@@ -10,15 +10,17 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
-					<div class="col-sm-8">
-						<input type="email" required="required" placeholder="Your Email Address" id="email" class="form-control" name="email">
+				<form method="post" action="{{ route('subscribe') }}">
+					<div class="col-md-6 col-md-offset-3">
+						<div class="col-sm-8">
+							<input type="email" required="required" placeholder="Your Email Address" id="email" class="form-control" name="email">
+						</div>
+						<div class="col-sm-4">
+							<button type="submit" class="btn btn-subscribe">Subscribe</button>
+						</div>
+						{{ csrf_field() }}
 					</div>
-					<div class="col-sm-4">
-						<a href="#" class="btn btn-subscribe">Subscribe</a>
-					</div>
-
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -32,23 +34,17 @@
 						<div class="col-md-3 col-sm-3">
 							<h3 class="column-title">Open Admissions</h3>
 							<ul class="column">
-								<li><a href="#">Abasyn University</a></li>
-								<li><a href="#">Iqra University</a></li>
-
+								@foreach(\App\Institute::all()->where('status', true)->take(3) as $institute)
+								<li><a href="{{ $institute->site_url }}" target="_blank">{{ $institute->name }}</a></li>
+								@endforeach
 							</ul>
-							<h3 class="column-title">Top By Search</h3>
-							<ul class="column">
-								<li><a href="#">Quaid Azam University</a></li>
-								<li><a href="#">NAST University</a></li>
-							</ul>
-							<div class="clear"></div>
 						</div>
 						<div class="col-md-3 col-sm-3">
-							<h3 class="column-title">Popular Universities</h3>
+							<h3 class="column-title">Pages</h3>
 							<ul class="column">
-								<li><a href="#">Comsats</a></li>
-								<li><a href="#">NAST</a></li>
-								<li><a href="#">FAST</a></li>
+								<li><a href="/byalpha">University</a></li>
+								<li><a href="/about">About Us</a></li>
+								<li><a href="/contact">Contact Us</a></li>
 							</ul>
 							<div class="clear"></div>
 						</div>
@@ -56,9 +52,9 @@
 						<div class="col-md-3 col-sm-3">
 							<h3 class="column-title">Area</h3>
 							<ul class="column">
-								<li><a href="#">Lahore</a></li>
-								<li><a href="#">Karachi</a></li>
-								<li><a href="#">Islamabad</a></li>
+								@foreach(\App\City::all()->sortByDesc('name')->take(4) as $city)
+								<li><a href="#">{{ $city->name }}</a></li>
+								@endforeach
 							</ul>
 							<div class="clear"></div>
 						</div>
@@ -101,7 +97,7 @@
 							</div>
 						</div>
 						<div class="cell-view">
-							<div class="social-content">
+							<div class="social-content" id="social-links">
 								<a class="post-facebook" href="#"><i class="fa fa-facebook"></i></a>
 								<a class="post-google-plus" href="#"><i class="fa fa-google-plus"></i></a>
 								<a class="post-twitter" href="#"><i class="fa fa-twitter"></i></a>

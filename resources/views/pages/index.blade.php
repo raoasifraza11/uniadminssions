@@ -1,13 +1,26 @@
+<?php
+	use App\Category;
+	use App\Address;
+	use App\City;
+?>
 @extends('layouts.master')
 
-@section('title') Home | Uni-admission @endsection
+@section('title') Home | Uni-admission @stop
+@section('jstop')
+	<script>
 
+	</script>
+@stop
 @section('content')
 <!-- static header -->
-
+@if(Session::has('message'))
+<div class="alert alert-success alert-dismissable fade in" id="success-alert">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('.alert').hide()">&times;</a>
+	<strong>Success!</strong> {{ Session::get('message') }}.
+</div>
+@endif
 <section class="static-section">
 	<div class="container">
-
 		<div class="row static-header-content-wrapper">
 			<div class="static-header-content">
 				<div class="static-header-text">
@@ -15,30 +28,26 @@
 					<h4 class="white">Find your favourite local School or University, get your desire Education.</h4>
 				</div>
 				<div class="search-form-wrap2">
-					<form class="clearfix" action="search">
+					<form class="clearfix" action="#" method="post">
 						<div class="input-field-wrap pull-left inner-addon left-addon">
 							<i class="icon-location"></i>
-							<input class="search-form-input" name="key-word" placeholder="Postcode/Town/City" type="text" />
+							<input class="search-form-input" name="key-word" placeholder="City" type="text" />
 						</div>
 						<div class="select-field-wrap pull-left">
 							<select class="search-form-select" name="categories">
-								<option class="options" value="all-categories">--Not Selected--</option>
-								<option class="options" value="america">Electrical</option>
-								<option class="options" value="canada">Chemical</option>
-								<option class="options" value="france">Computer Science</option>
-								<option class="options" value="germane ">Medical</option>
-								<option class="options" value="russia">Enginnering</option>
-								<option class="options" value="china">Arts</option>
+								@foreach(\App\Category::all() as $category)
+									<option class="options" value="{{ $category->id }}">{{ $category->name }}</option>
+								@endforeach
 							</select>
 						</div>
 						<div class="submit-field-wrap pull-left">
-							<input class="search-form-submit bgred-1 white" name="" type="submit" value="FIND UNIVERSITY" />
+							<input class="search-form-submit bgred-1 white" name="submit" type="submit" value="FIND UNIVERSITY" />
 						</div>
 					</form>
 				</div>
 
 				<div class="guest-info text-center">
-					<p><i class="fa fa-university" aria-hidden="true"></i> Open Admission in <span>2,200</span> Universities </p>
+					<p><i class="fa fa-university" aria-hidden="true"></i> Open Admission in <span>{{ \App\Institute::all()->where('status', true)->count() }}</span> Universities </p>
 				</div>
 
 			</div>
@@ -121,173 +130,39 @@
 
 		<!-- Single Restaurant detail -->
 		<div class="row single-listing">
+			<div class="row single-listing">
 				<!-- University detail -->
-				<div class="col-md-6 col-xs-12">
-					<div class="item-block">
-						<header>
-							<a href="#"><img src="img/Bayleaf.jpg" alt=""></a>
-							<div class="hgroup">
-								<h4><a href="#">Abasyn University Campus</a></h4>
-								<h5>Islamabad</h5>
-							</div>
-							<div class="header-meta">
-								<span class="icon-location">Al-Syed Avenue, Park Road, Chak Shahzad</span>
-							</div>
-						</header>
+				@foreach($institutes as $institute)
 
-						<footer>
-							<p class="status"><strong>Last Date:</strong> 22 June</p>
-							<p class="status"><strong>Category:</strong> Electrical Engineering</p>
+                    <?php $address =  Address::find($institute->address_id); ?>
+                    <?php $city =  City::find($institute->city_id); ?>
+                    <?php $category =  Category::find($institute->category_id); ?>
 
-							<div class="action-btn">
-								<a class="btn btn-xs btn-success" href="#">Open</a>
-							</div>
-						</footer>
+					<div class="col-md-6 col-xs-12">
+						<div class="item-block">
+							<header>
+								<a href="#"><img src="\storage\{{ $institute->image }}" alt="{{ $institute->image_alt }}"></a>
+								<div class="hgroup">
+									<h4><a href="#">{{ $institute->name }}</a></h4>
+									<h5>{{ $city->name }}</h5>
+								</div>
+								<div class="header-meta">
+									<span class="icon-location">{{ $address->address }}</span>
+								</div>
+							</header>
+
+							<footer>
+								<p class="status"><strong>Last Date: </strong>{{ $institute->last_date }}</p>
+								<p class="status"><strong>Category: </strong>{{ $category->name }}</p>
+
+								<div class="action-btn">
+									<a class="btn btn-xs {{ $institute->status? "btn-success" : "btn-danger" }}" href="#">{{ $institute->status? "Open" : "Close" }}</a>
+								</div>
+							</footer>
+						</div>
 					</div>
-				</div>
-				<!-- END Univeristy detail -->
 
-				<!-- University detail -->
-				<div class="col-md-6 col-xs-12">
-					<div class="item-block">
-						<header>
-							<a href="#"><img src="img/Bayleaf.jpg" alt=""></a>
-							<div class="hgroup">
-								<h4><a href="#">Abasyn University Campus</a></h4>
-								<h5>Islamabad</h5>
-							</div>
-							<div class="header-meta">
-								<span class="icon-location">Al-Syed Avenue, Park Road, Chak Shahzad</span>
-							</div>
-						</header>
-
-						<footer>
-							<p class="status"><strong>Last Date:</strong> 22 June</p>
-							<p class="status"><strong>Category:</strong> Electrical Engineering</p>
-
-							<div class="action-btn">
-								<a class="btn btn-xs btn-success" href="#">Open</a>
-							</div>
-						</footer>
-					</div>
-				</div>
-				<!-- END Univeristy detail -->
-
-
-		</div>
-		<!-- End Single Restaurant detail -->
-
-		<!-- Single Restaurant detail -->
-		<div class="row single-listing">
-			<!-- University detail -->
-				<div class="col-md-6 col-xs-12">
-					<div class="item-block">
-						<header>
-							<a href="#"><img src="img/Bayleaf.jpg" alt=""></a>
-							<div class="hgroup">
-								<h4><a href="#">Abasyn University Campus</a></h4>
-								<h5>Islamabad</h5>
-							</div>
-							<div class="header-meta">
-								<span class="icon-location">Al-Syed Avenue, Park Road, Chak Shahzad</span>
-							</div>
-						</header>
-
-						<footer>
-							<p class="status"><strong>Last Date:</strong> 22 June</p>
-							<p class="status"><strong>Category:</strong> Electrical Engineering</p>
-
-							<div class="action-btn">
-								<a class="btn btn-xs btn-danger" href="#">Closed</a>
-							</div>
-						</footer>
-					</div>
-				</div>
-				<!-- END Univeristy detail -->
-
-			<!-- University detail -->
-				<div class="col-md-6 col-xs-12">
-					<div class="item-block">
-						<header>
-							<a href="#"><img src="img/Bayleaf.jpg" alt=""></a>
-							<div class="hgroup">
-								<h4><a href="#">Abasyn University Campus</a></h4>
-								<h5>Islamabad</h5>
-							</div>
-							<div class="header-meta">
-								<span class="icon-location">Al-Syed Avenue, Park Road, Chak Shahzad</span>
-							</div>
-						</header>
-
-						<footer>
-							<p class="status"><strong>Last Date:</strong> 22 June</p>
-							<p class="status"><strong>Category:</strong> Electrical Engineering</p>
-
-							<div class="action-btn">
-								<a class="btn btn-xs btn-success" href="#">Open</a>
-							</div>
-						</footer>
-					</div>
-				</div>
-				<!-- END Univeristy detail -->		</div>
-		<!-- End Single Restaurant detail -->
-
-		<!-- Single Restaurant detail -->
-		<div class="row single-listing border-bottom-none">
-			<!-- University detail -->
-				<div class="col-md-6 col-xs-12">
-					<div class="item-block">
-						<header>
-							<a href="#"><img src="img/Bayleaf.jpg" alt=""></a>
-							<div class="hgroup">
-								<h4><a href="#">Abasyn University Campus</a></h4>
-								<h5>Islamabad</h5>
-							</div>
-							<div class="header-meta">
-								<span class="icon-location">Al-Syed Avenue, Park Road, Chak Shahzad</span>
-							</div>
-						</header>
-
-						<footer>
-							<p class="status"><strong>Last Date:</strong> 22 June</p>
-							<p class="status"><strong>Category:</strong> Electrical Engineering</p>
-
-							<div class="action-btn">
-								<a class="btn btn-xs btn-success" href="#">Open</a>
-							</div>
-						</footer>
-					</div>
-				</div>
-				<!-- END Univeristy detail -->
-			<!-- University detail -->
-				<div class="col-md-6 col-xs-12">
-					<div class="item-block">
-						<header>
-							<a href="#"><img src="img/Bayleaf.jpg" alt=""></a>
-							<div class="hgroup">
-								<h4><a href="#">Abasyn University Campus</a></h4>
-								<h5>Islamabad</h5>
-							</div>
-							<div class="header-meta">
-								<span class="icon-location">Al-Syed Avenue, Park Road, Chak Shahzad</span>
-							</div>
-						</header>
-
-						<footer>
-							<p class="status"><strong>Last Date:</strong> 22 June</p>
-							<p class="status"><strong>Category:</strong> Electrical Engineering</p>
-
-							<div class="action-btn">
-								<a class="btn btn-xs btn-danger" href="#">Closed</a>
-							</div>
-						</footer>
-					</div>
-				</div>
-				<!-- END Univeristy detail -->
-		</div>
-		<!-- End Single Restaurant detail -->
-
-	</div>
+				@endforeach
 </section>
 
 
@@ -324,186 +199,43 @@
 		<div class="row">
 			<div class="new-restaurant text-center">
 				<div class="listing-default-list-items list-unstyled list-inline">
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
 
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
+					<!-- One Post -->
+					@foreach($institutesWithLink as $item)
+                        <?php $city =  City::find($item->city_id); ?>
+                        <?php $category =  Category::find($item->category_id); ?>
+						<div class="col-md-4 col-sm-6 col-xs-12 item">
+							<div class="item-content item-static">
+								<div class="merchant-item merchant-item-partner">
+									<div class="merchant-body ec-image-loaded">
+										<img src="\storage\{{ $item->image }}" alt="{{ $item->image_alt }}">
+
+										<div class="merchant-text">
+											<span class="merchant-title"><a href="#">{{ $item->name }}</a></span>
+											<div class="merchant-additions">
+												<span class="merchant-location">{{ $city->name }}</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="merchant-footer">
+										<div class="merchant-details">
+											<span class="merchant-category"><a href="#">{{ $category->name }}</a></span>
+											<div class="clearfix"></div>
+										</div>
+										<div class="merchant-buttons">
+											<span class="merchant-button-primary"><a href="{{ $item->site_url }}">More Info</a></span>
+											<span class="merchant-button-secondary"><a href="{{ $item->site_url }}">Admission Detail</a></span>
 										</div>
 									</div>
 								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
-
-
-
 							</div>
 						</div>
-					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
 
 
+				@endforeach
+				<!-- End one Post -->
 
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
-
-
-
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
-
-
-
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
-
-
-
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
-
-
-
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -519,30 +251,7 @@
 			<div class="col-md-12">
 				<div class="cities">
 					<ul class="list-inline">
-						<li>
-							<a href="#">Lahore</a>
-						</li>
-						<li>
-							<a href="#">Karachi</a>
-						</li>
-						<li>
-							<a href="#">Islambad</a>
-						</li>
-						<li>
-							<a href="#">Peshawar</a>
-						</li>
-						<li>
-							<a href="#">Multan</a>
-						</li>
-						<li>
-							<a href="#">Sailkot</a>
-						</li>
-						<li>
-							<a href="#">Gujranwala</a>
-						</li>
-						<li>
-							<a href="#">Rawalpindi</a>
-						</li>
+						<!-- List of Citites -->
 					</ul>
 				</div>
 
@@ -588,7 +297,4 @@
 	</div>
 </section>
 <div class="clearfix"></div>
-<!-- =================================================
-Download App End -->
-
 @endsection

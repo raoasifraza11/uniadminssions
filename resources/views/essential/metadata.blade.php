@@ -5,7 +5,6 @@
 	<meta name="keywords" content="University, Institute, Open Admission, Technology, Engineering, Information Technology">
 	<meta name="author" content="iglyphic">
 	<link rel="shortcut icon" href="#">
-
 	<!-- CSS -->
 	@foreach(glob("css/*.css") as $css)
 		<link type="text/css" rel="stylesheet" href="{{$css}}">
