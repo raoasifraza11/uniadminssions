@@ -1,7 +1,11 @@
+<?php
+	use App\Category;
+	use App\Address;
+	use App\City;
+?>
 @extends('layouts.master')
 
-@section('title') Home | Uni-admission @endsection
-
+@section('title') Home | Uni-admission @stop
 @section('content')
 <!-- static header -->
 
@@ -15,20 +19,20 @@
 					<h4 class="white">Find your favourite local School or University, get your desire Education.</h4>
 				</div>
 				<div class="search-form-wrap2">
-					<form class="clearfix" action="search">
+					<form class="clearfix" action="#" method="post">
 						<div class="input-field-wrap pull-left inner-addon left-addon">
 							<i class="icon-location"></i>
 							<input class="search-form-input" name="key-word" placeholder="City" type="text" />
 						</div>
 						<div class="select-field-wrap pull-left">
 							<select class="search-form-select" name="categories">
-								@foreach($categories as $category)
+								@foreach(\App\Category::all() as $category)
 									<option class="options" value="{{ $category->id }}">{{ $category->name }}</option>
 								@endforeach
 							</select>
 						</div>
 						<div class="submit-field-wrap pull-left">
-							<input class="search-form-submit bgred-1 white" name="" type="submit" value="FIND UNIVERSITY" />
+							<input class="search-form-submit bgred-1 white" name="submit" type="submit" value="FIND UNIVERSITY" />
 						</div>
 					</form>
 				</div>
@@ -119,30 +123,31 @@
 		<div class="row single-listing">
 			<div class="row single-listing">
 				<!-- University detail -->
-				@foreach($uni as $inst)
+				@foreach($institutes as $institute)
 
-                    <?php $adds = App\Address::all()->where('id', '=', $inst->address_id); ?>
-                    <?php $cats = App\Category::all()->where('id', '=', $inst->category_id); ?>
-                    <?php $citi = App\City::all()->where('id', '=', $inst->city_id); ?>
+                    <?php $address =  Address::find($institute->address_id); ?>
+                    <?php $city =  City::find($institute->city_id); ?>
+                    <?php $category =  Category::find($institute->category_id); ?>
+
 					<div class="col-md-6 col-xs-12">
 						<div class="item-block">
 							<header>
-								<a href="#"><img src="\storage\{{ $inst->image }}" alt="{{ $inst->image_alt }}"></a>
+								<a href="#"><img src="\storage\{{ $institute->image }}" alt="{{ $institute->image_alt }}"></a>
 								<div class="hgroup">
-									<h4><a href="#">{{ $inst->name }}</a></h4>
-									<h5>@foreach($citi as $cit){{ $cit->name }}@endforeach</h5>
+									<h4><a href="#">{{ $institute->name }}</a></h4>
+									<h5>{{ $city->name }}</h5>
 								</div>
 								<div class="header-meta">
-									<span class="icon-location">@foreach($adds as $add){{ $add->address }} @endforeach</span>
+									<span class="icon-location">{{ $address->address }}</span>
 								</div>
 							</header>
 
 							<footer>
-								<p class="status"><strong>Last Date: </strong>{{ $inst->last_date }}</p>
-								<p class="status"><strong>Category: </strong>@foreach($cats as $cat){{ $cat->name }}@endforeach</p>
+								<p class="status"><strong>Last Date: </strong>{{ $institute->last_date }}</p>
+								<p class="status"><strong>Category: </strong>{{ $category->name }}</p>
 
 								<div class="action-btn">
-									<a class="btn btn-xs {{ $inst->status? "btn-success" : "btn-danger" }}" href="#">{{ $inst->status? "Open" : "Close" }}</a>
+									<a class="btn btn-xs {{ $institute->status? "btn-success" : "btn-danger" }}" href="#">{{ $institute->status? "Open" : "Close" }}</a>
 								</div>
 							</footer>
 						</div>
@@ -187,31 +192,31 @@
 				<div class="listing-default-list-items list-unstyled list-inline">
 
 					<!-- One Post -->
-					@foreach($in as $inst)
-                        <?php $citi = App\City::all()->where('id', '=', $inst->city_id); ?>
-                        <?php $cots = App\Country::all()->where('id', '=', $inst->country_id); ?>
+					@foreach($institutesWithLink as $item)
+                        <?php $city =  City::find($item->city_id); ?>
+                        <?php $category =  Category::find($item->category_id); ?>
 						<div class="col-md-4 col-sm-6 col-xs-12 item">
 							<div class="item-content item-static">
 								<div class="merchant-item merchant-item-partner">
 									<div class="merchant-body ec-image-loaded">
-										<img src="\storage\{{ $inst->image }}" alt="{{ $inst->image_alt }}">
+										<img src="\storage\{{ $item->image }}" alt="{{ $item->image_alt }}">
 
 										<div class="merchant-text">
-											<span class="merchant-title"><a href="#">{{ $inst->name }}</a></span>
+											<span class="merchant-title"><a href="#">{{ $item->name }}</a></span>
 											<div class="merchant-additions">
-												<span class="merchant-location">@foreach($citi as $cit){{ $cit->name }}@endforeach</span>
+												<span class="merchant-location">{{ $city->name }}</span>
 											</div>
 										</div>
 									</div>
 
 									<div class="merchant-footer">
 										<div class="merchant-details">
-											<span class="merchant-category"><a href="#">@foreach($cots as $cot){{ $cot->name }}@endforeach</a></span>
+											<span class="merchant-category"><a href="#">{{ $category->name }}</a></span>
 											<div class="clearfix"></div>
 										</div>
 										<div class="merchant-buttons">
-											<span class="merchant-button-primary"><a href="{{ $inst->site_url }}">More Info</a></span>
-											<span class="merchant-button-secondary"><a href="{{ $inst->site_url }}">Admission Detail</a></span>
+											<span class="merchant-button-primary"><a href="{{ $item->site_url }}">More Info</a></span>
+											<span class="merchant-button-secondary"><a href="{{ $item->site_url }}">Admission Detail</a></span>
 										</div>
 									</div>
 								</div>

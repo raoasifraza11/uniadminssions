@@ -17,12 +17,11 @@ class PagesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(){
-        $uni = Institute::all()->where('status', true)->take(6);
-        $in = Institute::all()->take(6)->sortBy('status');
-        $categories = Category::all();
+        $institutes = Institute::all()->where('status', true)->sortByDesc('id')->take(6);
+        $institutesWithLink = Institute::all()->take(6)->sortBy('status');
 
 
-        return view('pages.index', compact('categories', 'uni', 'in'));
+        return view('pages.index', compact('institutes', 'institutesWithLink'));
     }
 
 
@@ -55,7 +54,12 @@ class PagesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function byAlpha(){
-        return view('pages.byAlpha');
+        $data = [
+            'title' => 'Alphabets',
+            'institutes' => Institute::all()->sortBy('title')
+        ];
+        //var_dump($data['institutes']);
+        return view('pages.byDefault', compact('data'));
     }
 
     /**
@@ -63,7 +67,13 @@ class PagesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function byArea(){
-        return view('pages.byAlpha');
+        $data = [
+            'title' => 'Area',
+            'institutes' => Institute::all()->sortBy('address_id')
+
+        ];
+
+        return view('pages.byDefault', compact('data'));
     }
 
     /**
@@ -71,12 +81,24 @@ class PagesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function byCategory(){
-        return view('pages.byAlpha');
+        $data = [
+            'title' => 'Category',
+            'institutes' => Institute::all()->sortBy('category_id')
+
+        ];
+
+        return view('pages.byDefault', compact('data'));
     }
 
     public function testuni(){
-        $uni = Institute::all()->where('status', '=', true);
-        return view('test', compact('uni'));
+        $institutes = Institute::all()->where('status', '=', true);
+        return view('test', compact('institutes'));
     }
 
+    public function debug(){
+
+        $data = Category::find(1);
+
+        return $data['name'];
+    }
 }

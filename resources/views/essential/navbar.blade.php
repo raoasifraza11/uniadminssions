@@ -48,7 +48,7 @@
 					<li><a {{ (Request::is('contact') ? 'class=active' : null) }} href="contact">Contact Us</a></li>
 			</li>
 			<li>
-					<li><a {{ (Request::is('follow') ? 'class=active' : null) }}  href="http://www.google.com" target="_blank">Follow</a></li>
+					<li><a href="#social-links">Follow Us</a></li>
 			</li>
 			
 		</ul>

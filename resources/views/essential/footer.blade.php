@@ -101,7 +101,7 @@
 							</div>
 						</div>
 						<div class="cell-view">
-							<div class="social-content">
+							<div class="social-content" id="social-links">
 								<a class="post-facebook" href="#"><i class="fa fa-facebook"></i></a>
 								<a class="post-google-plus" href="#"><i class="fa fa-google-plus"></i></a>
 								<a class="post-twitter" href="#"><i class="fa fa-twitter"></i></a>

@@ -2,8 +2,10 @@
 <html lang="en">
 
 <head>
+	@include('essential.metadata')
 	<title>@yield('title')</title>
-		@include('essential.metadata')
+	@yield('css')
+	@yield('jstop')
 </head>
 	@yield('body')
 <body class="style-2 nav-on-header index-4">
@@ -35,6 +37,7 @@
 <div id="to-top" class="main-bg"><span class="fa fa-chevron-up"></span></div>
 
 	@include('essential.bottom')
+@yield('js')
 
 
 </body>

@@ -35,6 +35,9 @@ Route::get('/bycategory', 'PagesController@byCategory');
 
 Route::get('/test', 'PagesController@testuni');
 
+Route::get('/debug', 'PagesController@debug');
+
+Route::post('/search', 'PagesController@search');
 
 Route::post('/sendmail', function (\Illuminate\Http\Request $request, \Illuminate\Mail\Mailer $mailer) {
     $mailer
