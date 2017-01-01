@@ -119,56 +119,41 @@
 			<!-- col-md-12 -->
 		</div>
 
-		<?php
-		$jsonPath = "http://uni-admissions.com/public/json/institutedata.json";
-		$jsonStr =  file_get_contents($jsonPath);
-		$user =  json_decode($jsonStr, true);
 
-		//print_r($user);
+		<div class="row single-listing">
+			<!-- University detail -->
+			@foreach($uni as $inst)
 
-		for($i = 0; $i < count($user['Institute']); $i++){
-				$name = $user['Institute'][$i]['inst_name'];
-				$address = $user['Institute'][$i]['Address'];
-				$lastdate = $user['Institute'][$i]['deadline'];
-				$department = $user['Institute'][$i]['department'];
-				$status = $user['Institute'][$i]['status_id'];
-				$image = $user['Institute'][$i]['ImageAdrress'];
+                <?php $adds = App\Address::all()->where('id', '=', $inst->address_id); ?>
+                <?php $cats = App\Category::all()->where('id', '=', $inst->category_id); ?>
+                <?php $citi = App\City::all()->where('id', '=', $inst->city_id); ?>
+			<div class="col-md-6 col-xs-12">
+				<div class="item-block">
+					<header>
+						<a href="#"><img src="\storage\{{ $inst->image }}" alt="{{ $inst->image_alt }}"></a>
+						<div class="hgroup">
+							<h4><a href="#">{{ $inst->name }}</a></h4>
+							<h5>@foreach($citi as $cit){{ $cit->name }}@endforeach</h5>
+						</div>
+						<div class="header-meta">
+							<span class="icon-location">@foreach($adds as $add){{ $add->address }} @endforeach</span>
+						</div>
+					</header>
 
-			if($i%2 == 1)
-				echo '<div class="row single-listing">';
-			#<!-- University detail -->
-				echo '<div class="col-md-6 col-xs-12">'
-					 .'<div class="item-block">'
-						.'<header>'
-							.'<a href="#"><img src="'.$image.'" alt=""></a>'
-								.'<div class="hgroup">'.
-								 "<h4><a href='#'>". $name ."</a></h4>".
-								 '<h5>Islamabad</h5>'.
-							 '</div>'.
-							 '<div class="header-meta">'.
-								'<span class="icon-location"> '. $address .'</span>'.
-							 '</div>'.
-						 '</header>'.
+					<footer>
+						<p class="status"><strong>Last Date: </strong>{{ $inst->last_date }}</p>
+						<p class="status"><strong>Category: </strong>@foreach($cats as $cat){{ $cat->name }}@endforeach</p>
 
-						 '<footer>'.
-							 '<p class="status"><strong>Last Date:</strong> '. $lastdate .'</p>'.
-							 '<p class="status"><strong>Category:</strong> '. $department .'</p>'.
+						<div class="action-btn">
+							<a class="btn btn-xs {{ $inst->status? "btn-success" : "btn-danger" }}" href="#">{{ $inst->status? "Open" : "Close" }}</a>
+						</div>
+					</footer>
+				</div>
+		</div>
 
-							 '<div class="action-btn">'.
-								 '<a class="'.(($status) ? 'btn btn-xs btn-success' : 'btn btn-xs btn-danger').'" href="#">'.(($status) ? 'Open' : 'Closed').'</a>'.
-							 '</div>'.
-						 '</footer>'.
-					 '</div>'.
-				 '</div>';
-			#@<!-- END Univeristy detail -->
-			  if($i%2 == 1)
-				 echo '</div>';
+	@endforeach
+		</div>
 
-		}
-
-		?>
-
-	</div>
 </section>
 
 
@@ -196,7 +181,6 @@
 
 		<div class="row">
 			<div class="col-md-12 text-center">
-
 				<h2>New  <span class="font-semibold">Universities</span> & Colleges</h2>
 			</div>
 			<!-- col-md-12 -->
@@ -205,28 +189,35 @@
 		<div class="row">
 			<div class="new-restaurant text-center">
 				<div class="listing-default-list-items list-unstyled list-inline">
+
+					<!-- One Post -->
+					@foreach($uni as $inst)
+					<?php $adds = App\Address::all()->where('id', '=', $inst->address_id); ?>
+                    <?php $cats = App\Category::all()->where('id', '=', $inst->category_id); ?>
+                    <?php $citi = App\City::all()->where('id', '=', $inst->city_id); ?>
+					<?php $cots = App\Country::all()->where('id', '=', $inst->country_id); ?>
 					<div class="col-md-4 col-sm-6 col-xs-12 item">
 						<div class="item-content item-static">
 							<div class="merchant-item merchant-item-partner">
 								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
+									<img src="\storage\{{ $inst->image }}" alt="{{ $inst->image_alt }}">
 
 									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
+										<span class="merchant-title"><a href="#">{{ $inst->name }}</a></span>
 										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
+											<span class="merchant-location">@foreach($citi as $cit){{ $cit->name }}@endforeach</span>
 										</div>
 									</div>
 								</div>
 
 								<div class="merchant-footer">
 									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
+										<span class="merchant-category"><a href="#">@foreach($cots as $cot){{ $cot->name }}@endforeach</a></span>
 										<div class="clearfix"></div>
 									</div>
 									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
+										<span class="merchant-button-primary"><a href="{{ $inst->site_url }}">More Info</a></span>
+										<span class="merchant-button-secondary"><a href="{{ $inst->site_url }}">Admission Detail</a></span>
 									</div>
 								</div>
 
@@ -235,156 +226,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
 
 
-
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
+						@endforeach
+					<!-- End one Post -->
 
 
-
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
-
-
-
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
-
-
-
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6 col-xs-12 item">
-						<div class="item-content item-static">
-							<div class="merchant-item merchant-item-partner">
-								<div class="merchant-body ec-image-loaded">
-									<img src="img/nust.jpg" alt="">
-
-									<div class="merchant-text">
-										<span class="merchant-title"><a href="#">NUST &amp; University</a></span>
-										<div class="merchant-additions">
-											<span class="merchant-location">Islamabad City</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="merchant-footer">
-									<div class="merchant-details">
-										<span class="merchant-category"><a href="#">Pakistan</a></span>
-										<div class="clearfix"></div>
-									</div>
-									<div class="merchant-buttons">
-										<span class="merchant-button-primary"><a href="#">More Info</a></span>
-										<span class="merchant-button-secondary"><a href="#">Admission Detail</a></span>
-									</div>
-								</div>
-
-
-
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>

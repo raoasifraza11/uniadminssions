@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\City;
+use App\Institute;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,12 @@ class PagesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(){
-        return view('pages.index');
+        $uni = Institute::all()->where('status', true)->take(6);
+        $in = Institute::all()->take(6)->sortBy('status');
+        $categories = Category::all();
+
+
+        return view('pages.index', compact('categories', 'uni', 'in'));
     }
 
 
@@ -65,6 +72,11 @@ class PagesController extends Controller
      */
     public function byCategory(){
         return view('pages.byAlpha');
+    }
+
+    public function testuni(){
+        $uni = Institute::all()->where('status', '=', true);
+        return view('test', compact('uni'));
     }
 
 }

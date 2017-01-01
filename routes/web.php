@@ -32,3 +32,13 @@ Route::get('/byalpha', 'PagesController@byAlpha');
 Route::get('/byarea', 'PagesController@byArea');
 # byCategory
 Route::get('/bycategory', 'PagesController@byCategory');
+
+Route::get('/test', 'PagesController@testuni');
+
+
+Route::post('/sendmail', function (\Illuminate\Http\Request $request, \Illuminate\Mail\Mailer $mailer) {
+    $mailer
+        ->to($request->input('mail'))
+        ->send(new \App\Mail\MyMail($request->input('title'), $request->input('phone'), $request->input('bodyMessage')));
+    return redirect()->back();
+})->name('sendmail');
