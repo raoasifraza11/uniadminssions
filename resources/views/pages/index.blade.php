@@ -224,8 +224,8 @@
 											<div class="clearfix"></div>
 										</div>
 										<div class="merchant-buttons">
-											<span class="merchant-button-primary"><a href="{{ $item->site_url }}">More Info</a></span>
-											<span class="merchant-button-secondary"><a href="{{ $item->site_url }}">Admission Detail</a></span>
+											<span class="merchant-button-primary"><a href="{{ $item->site_url }}" target="_blank">More Info</a></span>
+											<span class="merchant-button-secondary"><a href="{{ $item->site_url }}" target="_blank">Admission Detail</a></span>
 										</div>
 									</div>
 								</div>

@@ -15,16 +15,14 @@
 
 		<!-- User account -->
 		<div class="pull-right user-login">
-			@if (Route::has('login'))
-				<div class="top-right links">
-					@if (Auth::check())
-						<a class="btn btn-sm btn-primary" href="{{ url('/admin') }}">Dashboard</a>
+			<div class="top-right links">
+			@if (Auth::guest())
+					{{--<a class="btn btn-sm btn-primary" href="{{ url('/login') }}">Login</a> --}}
+					{{-- or &nbsp;<a class="user-register" href="{{ url('/register') }}">Register</a> --}}
 					@else
-						{{--<a class="btn btn-sm btn-primary" href="{{ url('/login') }}">Login</a> --}}
-						{{-- or &nbsp;<a class="user-register" href="{{ url('/register') }}">Register</a> --}}
-					@endif
-				</div>
+						<a class="btn btn-sm btn-primary" href="{{ url('/admin') }}">Admin Dashboard</a>
 			@endif
+			</div>
 		</div>
 		<!-- END User account -->
 

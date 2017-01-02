@@ -6,7 +6,7 @@
 
 @extends('layouts.master')
 
-@section('title') Institute by Alphabets | Uni-admission @endsection
+@section('title') Institute by {{ $data['title'] }} | Uni-admission @endsection
 
 @section('body') <body class="style-2 nav-on-header-white"> @endsection
 
