@@ -68,3 +68,7 @@ Route::post('/sendmail', function (Request $request, Mailer $mailer) {
         ->send(new QueryMail($request->input('title'), $request->input('phone'), $request->input('bodyMessage')));
     return redirect()->to('contact#success-alert')->with('message', 'send email.');
 })->name('sendmail');
+
+
+Route::get('/api/getsubscribe/list', 'ApiController@getSubscribersList');
+Route::get('/api/getsubscribe/list/filter/{id}', 'ApiController@getSubscribersListFilter');
