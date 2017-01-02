@@ -98,10 +98,10 @@
 						</div>
 						<div class="cell-view">
 							<div class="social-content" id="social-links">
-								<a class="post-facebook" href="#"><i class="fa fa-facebook"></i></a>
-								<a class="post-google-plus" href="#"><i class="fa fa-google-plus"></i></a>
-								<a class="post-twitter" href="#"><i class="fa fa-twitter"></i></a>
-								<a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+								<a class="post-facebook" href="{{ voyager::setting('facebook') }}" target="_blank"><i class="fa fa-facebook"></i></a>
+								<a class="post-google-plus" href="{{ voyager::setting('google_plus') }}" target="_blank"><i class="fa fa-google-plus"></i></a>
+								<a class="post-twitter" href="{{ voyager::setting('twitter') }}" target="_blank"><i class="fa fa-twitter"></i></a>
+								<a class="linkedin" href="{{ voyager::setting('linkedin') }}" target="_blank"><i class="fa fa-linkedin"></i></a>
 							</div>
 						</div>
 					</div>
