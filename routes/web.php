@@ -1,5 +1,9 @@
 <?php
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Mail\Mailer;
+use App\Mail\SubscribeMail;
+use App\Mail\QueryMail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,9 +41,9 @@ Route::get('/flash', function (){
 
 Route::get('/debug', 'PagesController@debug');
 
-Route::post('/search', 'PagesController@search');
+Route::post('/search', 'PagesController@search')->name('search');
 
-Route::post('/subscribe', function (\Illuminate\Http\Request $request){
+Route::post('/subscribe', function (Request $request, Mailer $mailer){
     define('SUBSCRIBE', 3);
     $subsribeUser = new User();
     $subsribeUser->name = "Subsciber";
@@ -49,13 +53,18 @@ Route::post('/subscribe', function (\Illuminate\Http\Request $request){
     $subsribeUser->timestamps;
     $subsribeUser->role_id = SUBSCRIBE;
     $subsribeUser->save();
-    return redirect()->back()->with('message', "You have successfully subscribe Our Alerts.");
+    //return redirect()->to('/#success-alert')->with('message', "You have successfully subscribe Our Alerts.");
+    // Send mail
+    $mailer
+        ->to($request->input('email'))
+        ->send(new SubscribeMail($request->email));
+    return redirect()->to('/#success-alert')->with('message', "You have successfully subscribe Our Alerts.");
 })->name('subscribe');
 
 
-Route::post('/sendmail', function (\Illuminate\Http\Request $request, \Illuminate\Mail\Mailer $mailer) {
+Route::post('/sendmail', function (Request $request, Mailer $mailer) {
     $mailer
         ->to($request->input('mail'))
-        ->send(new \App\Mail\MyMail($request->input('title'), $request->input('phone'), $request->input('bodyMessage')));
-    return redirect()->back()->with('message', 'send email.');
+        ->send(new QueryMail($request->input('title'), $request->input('phone'), $request->input('bodyMessage')));
+    return redirect()->to('contact#success-alert')->with('message', 'send email.');
 })->name('sendmail');

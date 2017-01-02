@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MyMail extends Mailable
+class QueryMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -35,6 +35,6 @@ class MyMail extends Mailable
     public function build()
     {
         return $this->from('asif-c63f2a@inbox.mailtrap.io', 'Contact Us')
-            ->view('email.mymail');
+            ->view('email.querymail');
     }
 }

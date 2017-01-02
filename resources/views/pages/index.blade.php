@@ -6,18 +6,17 @@
 @extends('layouts.master')
 
 @section('title') Home | Uni-admission @stop
-@section('jstop')
-	<script>
 
-	</script>
+@section('jstop')
 @stop
+
 @section('content')
 <!-- static header -->
 @if(Session::has('message'))
-<div class="alert alert-success alert-dismissable fade in" id="success-alert">
-	<a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('.alert').hide()">&times;</a>
-	<strong>Success!</strong> {{ Session::get('message') }}.
-</div>
+	<div class="alert alert-success float-right top-margin" id="success-alert">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#seccess-alert').hide()">&times;</a>
+		<strong>Successfuly! </strong> {{ Session::get('message') }}.
+	</div>
 @endif
 <section class="static-section">
 	<div class="container">
@@ -28,13 +27,13 @@
 					<h4 class="white">Find your favourite local School or University, get your desire Education.</h4>
 				</div>
 				<div class="search-form-wrap2">
-					<form class="clearfix" action="#" method="post">
+					<form class="clearfix" action="{{ route('search') }}" method="post">
 						<div class="input-field-wrap pull-left inner-addon left-addon">
 							<i class="icon-location"></i>
-							<input class="search-form-input" name="key-word" placeholder="City" type="text" />
+							<input class="search-form-input" name="city" placeholder="City" type="text" required/>
 						</div>
 						<div class="select-field-wrap pull-left">
-							<select class="search-form-select" name="categories">
+							<select class="search-form-select" name="category" required>
 								@foreach(\App\Category::all() as $category)
 									<option class="options" value="{{ $category->id }}">{{ $category->name }}</option>
 								@endforeach
@@ -43,6 +42,7 @@
 						<div class="submit-field-wrap pull-left">
 							<input class="search-form-submit bgred-1 white" name="submit" type="submit" value="FIND UNIVERSITY" />
 						</div>
+						{{ csrf_field() }}
 					</form>
 				</div>
 
@@ -297,4 +297,7 @@
 	</div>
 </section>
 <div class="clearfix"></div>
+@endsection
+@section('js')
+
 @endsection
