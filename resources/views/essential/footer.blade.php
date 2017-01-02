@@ -13,7 +13,7 @@
 				<form method="post" action="{{ route('subscribe') }}">
 					<div class="col-md-6 col-md-offset-3">
 						<div class="col-sm-8">
-							<input type="email" required="required" placeholder="Your Email Address" id="email" class="form-control" name="email">
+							<input type="email" name="email" required="required" placeholder="Your Email Address" id="email" class="form-control" name="email">
 						</div>
 						<div class="col-sm-4">
 							<button type="submit" class="btn btn-subscribe">Subscribe</button>

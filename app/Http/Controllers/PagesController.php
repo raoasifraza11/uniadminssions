@@ -7,6 +7,7 @@ use App\City;
 use App\Institute;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class PagesController extends Controller
 {
@@ -41,13 +42,6 @@ class PagesController extends Controller
         return view('pages.contact-us');
     }
 
-    /**
-     * Search page redirection
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function search(){
-        return view('pages.search-list');
-    }
 
     /**
      * search by Alphabets redirection
@@ -92,6 +86,20 @@ class PagesController extends Controller
         return view('pages.byDefault', compact('data'));
     }
 
+    public function search(Request $request){
+        $categoryName = Category::find($request->category);
+        $cityName = City::all()->where('name', $request->city)->first();
+        $data = [
+            'category_keyword' => $categoryName->name,
+            'city_keyword' => $cityName->name,
+            'institutes' => Institute::where('category_id', $categoryName->id)
+                                             ->orWhere('city_id', $cityName->id)
+                                            ->get()
+
+        ];
+
+        return view('pages.search', compact('data'));
+    }
 
     /**
      * Debug the view output
