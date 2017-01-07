@@ -3,8 +3,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="The University admission plateform that provide you all currently open admission of institute.">
 	<meta name="keywords" content="University, Institute, Open Admission, Technology, Engineering, Information Technology">
-	<meta name="author" content="iglyphic">
-	<link rel="shortcut icon" href="#">
 	<!-- CSS -->
 	@foreach(glob("css/*.css") as $css)
 		<link type="text/css" rel="stylesheet" href="{{$css}}">
