@@ -94,7 +94,7 @@ class PagesController extends Controller
             'city_keyword' => $cityName->name,
             'institutes' => Institute::where('category_id', $categoryName->id)
                                              ->orWhere('city_id', $cityName->id)
-                                            ->get()
+                                             ->get()
 
         ];
 
