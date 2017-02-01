@@ -72,3 +72,7 @@ Route::post('/sendmail', function (Request $request, Mailer $mailer) {
 
 Route::get('/api/getsubscribe/list', 'ApiController@getSubscribersList');
 Route::get('/api/getsubscribe/list/filter/{id}', 'ApiController@getSubscribersListFilter');
+
+Route::get('/location', function (){
+    return view('location');
+});
