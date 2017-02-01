@@ -1,7 +1,14 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: raoasifraza
- * Date: 01/02/2017
- * Time: 10:14 AM
- */
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Location Test</title>
+</head>
+<body>
+<!-- Source: https://developers.google.com/maps/documentation/javascript/geolocation -->
+
+</body>
+</html>
