@@ -25,19 +25,8 @@
 <div id="map"></div>
 
 <script>
-    // Note: This example requires that you consent to location sharing when
-    // prompted by your browser. If you see the error "The Geolocation service
-    // failed.", it means you probably did not give permission for the browser to
-    // locate you.
-
-    var city;
 
     function initMap() {
-        /*var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 6
-        });
-        var infoWindow = new google.maps.InfoWindow({map: map});*/
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -48,21 +37,15 @@
                 };
 
                 // Get Positoin Name passing args => pos;
-                getAddress(pos).then(function(result){
+                getAddressName(pos).then(function(result){
                     console.log(result);
                     }).catch(function(ex){
                         console.log(ex);
                 });
-
-                /*infoWindow.setPosition(pos);
-                infoWindow.setContent('Location found.');
-                map.setCenter(pos);*/
-            }/*, function() {
-                handleLocationError(true, infoWindow, map.getCenter());
-            }*/);
+            });
         } else {
             // Browser doesn't support Geolocation
-            console.log("Location not support");
+            console.log("Browser doesn't support Geolocation");
         }
     }
 
@@ -71,7 +54,7 @@
      * Get GeoLocation Title
      * @param pos
      */
-    function getAddress (pos) {
+    function getAddressName (pos) {
         return new Promise(function (resolve, reject) {
             var request = new XMLHttpRequest();
 
@@ -94,13 +77,9 @@
                     }
                 }
             };
-
             request.send();
         });
-
-
-
-    };
+    }
 
 </script>
 <script async defer
