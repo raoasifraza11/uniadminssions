@@ -59,7 +59,7 @@
                 var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
                 var contentString = '<div id="content">' +
-                        '<h3>metlife.</h3><p>3453 corn street, Sanford, FL 34232</p>' +
+                        '<h3>Abasyn University.</h3><p>Islamabad Campus</p>' +
                         '</div>';
 
                 var infowindow = new google.maps.InfoWindow({
@@ -69,7 +69,7 @@
                 var marker = new google.maps.Marker({
                     position: myLatlng,
                     map: map,
-                    title: 'Uluru (Ayers Rock)'
+                    title: 'AUIC Islamabad'
                 });
                 google.maps.event.addListener(marker, 'click', function() {
                     infowindow.open(map, marker);

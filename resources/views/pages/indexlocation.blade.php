@@ -132,7 +132,7 @@ use App\City;
 
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h2>Choose from the  <span class="font-semibold" id="location"></span></h2>
+                    <h2><span class="font-semibold" id="location">Choose from the </span></h2>
                 </div>
                 <!-- col-md-12 -->
             </div>
