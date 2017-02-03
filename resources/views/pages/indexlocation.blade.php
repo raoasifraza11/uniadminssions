@@ -26,7 +26,7 @@ use App\City;
                     getAddressName(pos).then(function(result){
                         console.log(result);
                         var span = document.getElementById('location');
-                        span.innerHTML = span.innerHTML + result ;
+                        span.innerHTML = "Choose from the " + result ;
                         console.log(span);
                     }).catch(function(ex){
                         console.log(ex);
@@ -132,7 +132,7 @@ use App\City;
 
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h2><span class="font-semibold" id="location">Choose from the </span></h2>
+                    <h2><span class="font-semibold" id="location"> </span></h2>
                 </div>
                 <!-- col-md-12 -->
             </div>
