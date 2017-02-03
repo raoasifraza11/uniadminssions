@@ -76,3 +76,6 @@ Route::get('/api/getsubscribe/list/filter/{id}', 'ApiController@getSubscribersLi
 Route::get('/location', function (){
     return view('pages.location');
 });
+
+
+Route::get('/indexloc', 'PagesController@index');
