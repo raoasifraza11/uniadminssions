@@ -8,6 +8,72 @@ use App\City;
 @section('title') Home | Uni-admission @stop
 
 @section('jstop')
+
+    <script>
+
+
+        function initMap() {
+
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    // Get Positoin Name passing args => pos;
+                    getAddressName(pos).then(function(result){
+                        console.log(result);
+                        var span = document.getElementById('location');
+                        span.innerHTML = span.innerHTML + result ;
+                        console.log(span);
+                    }).catch(function(ex){
+                        console.log(ex);
+                    });
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                console.log("Browser doesn't support Geolocation");
+            }
+        }
+
+
+        /**
+         * Get GeoLocation Title
+         * @param pos
+         */
+        function getAddressName (pos) {
+            return new Promise(function (resolve, reject) {
+                var request = new XMLHttpRequest();
+
+                var method = 'GET';
+                var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '&sensor=true';
+                var async = true;
+
+                request.open(method, url, async);
+                request.onreadystatechange = function () {
+                    if (request.readyState == 4) {
+                        if (request.status == 200) {
+                            var data = JSON.parse(request.responseText);
+                            var address = data.results[0];
+                            city = address.address_components[1].long_name;
+                            //console.log(city);
+                            resolve(city);
+                        }
+                        else {
+                            reject(request.status);
+                        }
+                    }
+                };
+                request.send();
+            });
+        }
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1fcbNH6X_lGnNchC-NqN4sPJWsJvtN0k&callback=initMap">
+    </script>
 @stop
 
 @section('content')
@@ -49,70 +115,13 @@ use App\City;
                     <div class="guest-info text-center">
                         <p><i class="fa fa-university" aria-hidden="true"></i> Open Admission in <span>{{ \App\Institute::all()->where('status', true)->count() }}</span> Universities </p>
                     </div>
-
                 </div>
-
-
-
             </div>
-
-
-
-
         </div>
     </section>
 
     <section id="service-feature">
-        <!-- UI X -->
-        <div class="service-feature">
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <div class="slider-title">
-                            You can find a University or get Admission
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <!-- Service Item -->
-                        <div class="service-item">
-                            <!-- Service Icon -->
-                            <i class="icon-home bg-red"></i>
-                            <!-- Service Title -->
-                            <h4>Localize</h4>
-
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4">
-                        <!-- Service Item -->
-                        <div class="service-item delivery-icon">
-                            <!-- Service Icon -->
-                            <i class="icon-heart-1 bg-red"></i>
-                            <!-- Service Title -->
-                            <h4>Favorite</h4>
-
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4">
-                        <!-- Service Item -->
-                        <div class="service-item reservation-icon">
-                            <!-- Service Icon -->
-
-                            <i class="icon-calendar bg-red"></i>
-
-                            <!-- Service Title -->
-                            <h4>Time Saving</h4>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
     </section>
 
 
@@ -123,7 +132,7 @@ use App\City;
 
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h2>Choose from the  <span class="font-semibold">best Universities</span></h2>
+                    <h2>Choose from the  <span class="font-semibold" id="location"></span></h2>
                 </div>
                 <!-- col-md-12 -->
             </div>
@@ -301,66 +310,5 @@ use App\City;
     <div class="clearfix"></div>
 @endsection
 @section('js')
-    <script>
-
-        function initMap() {
-
-            // Try HTML5 geolocation.
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-
-                    // Get Positoin Name passing args => pos;
-                    getAddressName(pos).then(function(result){
-                        console.log(result);
-                    }).catch(function(ex){
-                        console.log(ex);
-                    });
-                });
-            } else {
-                // Browser doesn't support Geolocation
-                console.log("Browser doesn't support Geolocation");
-            }
-        }
-
-
-        /**
-         * Get GeoLocation Title
-         * @param pos
-         */
-        function getAddressName (pos) {
-            return new Promise(function (resolve, reject) {
-                var request = new XMLHttpRequest();
-
-                var method = 'GET';
-                var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '&sensor=true';
-                var async = true;
-
-                request.open(method, url, async);
-                request.onreadystatechange = function () {
-                    if (request.readyState == 4) {
-                        if (request.status == 200) {
-                            var data = JSON.parse(request.responseText);
-                            var address = data.results[0];
-                            city = address.address_components[1].long_name;
-                            //console.log(city);
-                            resolve(city);
-                        }
-                        else {
-                            reject(request.status);
-                        }
-                    }
-                };
-                request.send();
-            });
-        }
-
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1fcbNH6X_lGnNchC-NqN4sPJWsJvtN0k&callback=initMap">
-    </script>
 
 @endsection
