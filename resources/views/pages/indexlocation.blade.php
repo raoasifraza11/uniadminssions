@@ -49,13 +49,71 @@ use App\City;
                     <div class="guest-info text-center">
                         <p><i class="fa fa-university" aria-hidden="true"></i> Open Admission in <span>{{ \App\Institute::all()->where('status', true)->count() }}</span> Universities </p>
                     </div>
+
                 </div>
 
+
+
             </div>
+
+
+
+
         </div>
     </section>
 
+    <section id="service-feature">
+        <!-- UI X -->
+        <div class="service-feature">
 
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="slider-title">
+                            You can find a University or get Admission
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <!-- Service Item -->
+                        <div class="service-item">
+                            <!-- Service Icon -->
+                            <i class="icon-home bg-red"></i>
+                            <!-- Service Title -->
+                            <h4>Localize</h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <!-- Service Item -->
+                        <div class="service-item delivery-icon">
+                            <!-- Service Icon -->
+                            <i class="icon-heart-1 bg-red"></i>
+                            <!-- Service Title -->
+                            <h4>Favorite</h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <!-- Service Item -->
+                        <div class="service-item reservation-icon">
+                            <!-- Service Icon -->
+
+                            <i class="icon-calendar bg-red"></i>
+
+                            <!-- Service Title -->
+                            <h4>Time Saving</h4>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
 
 
 

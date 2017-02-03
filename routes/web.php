@@ -78,4 +78,4 @@ Route::get('/location', function (){
 });
 
 
-Route::get('/indexloc', 'PagesController@index');
+Route::get('/indexlocation', 'PagesController@indexWithLocation');

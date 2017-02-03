@@ -25,6 +25,14 @@ class PagesController extends Controller
         return view('pages.index', compact('institutes', 'institutesWithLink'));
     }
 
+    public function indexWithLocation(){
+        $institutes = Institute::all()->where('status', true)->sortByDesc('id')->take(6);
+        $institutesWithLink = Institute::all()->take(6)->sortBy('status');
+
+
+        return view('pages.indexlocation', compact('institutes', 'institutesWithLink'));
+    }
+
 
     /**
      * About page redirection
