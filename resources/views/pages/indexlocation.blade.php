@@ -7,6 +7,15 @@ use App\City;
 
 @section('title') Home | Uni-admission @stop
 
+@section('css')
+    <style>
+        .static-section {
+            height: 300px;
+            margin-bottom: 210px;
+        }
+    </style>
+@stop
+
 @section('jstop')
 
     <script>
@@ -81,7 +90,7 @@ use App\City;
     @if(Session::has('message'))
         <div class="alert alert-success float-right top-margin" id="success-alert">
             <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#seccess-alert').hide()">&times;</a>
-            <strong>Successfuly! </strong> {{ Session::get('message') }}.
+            <strong>Successfully! </strong> {{ Session::get('message') }}.
         </div>
     @endif
     <section class="static-section">
